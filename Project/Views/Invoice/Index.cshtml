@@ -1,0 +1,116 @@
+﻿@using Project.Models
+@{
+    ViewBag.Title = "Index";
+    Cart x = Session["Cart"] as Cart;
+    DonHang y = (DonHang)ViewData["Bill"];
+    Session["Cart"] = new Cart();
+}
+<style>
+    .invoice {
+        position: relative;
+        background: transparent;
+        padding: 20px;
+        margin: 10px 25px;
+        color: #fff;
+    }
+
+    .page-header {
+        margin: 10px 0 20px 0;
+        font-size: 22px;
+    }
+</style>
+
+<section class="content content_content" style="width: 70%; margin: auto;">
+    <section class="invoice text-white">
+        <!-- title row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="page-header">
+                    <i class="fa fa-globe"></i> Đặt hàng thành công
+                </h2>
+            </div><!-- /.col -->
+        </div>
+        <!-- info row -->
+        <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                Universe Co.
+                <address>
+                    <strong>
+                    </strong>
+                </address>
+            </div><!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                Người nhận
+                <address>
+                    <strong>
+                        @y.KhachHang.tenKH
+                    </strong>
+                    <br>
+                    <br>
+                    Số điện thoại:
+                    @y.KhachHang.soDT                                  <br>
+                    Email nhận hàng: @y.emailGH
+                </address>
+            </div><!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+                <b>Hóa đơn số #@y.soDH</b><br>
+                <br>
+                <br />
+                <b>Ngày đặt hàng:</b> @(y.ngayDat?.ToString("dd/MM/yyyy hh:mm"))<br>
+                <b>Nhân viên xử lí:</b> @y.TaiKhoan1.hoDem @y.TaiKhoan1.tenTV
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        <!-- Table row -->
+        <div class="row">
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-striped text-white">
+                    <thead>
+                        <tr>
+                            <th>Số lượng</th>
+                            <th>Phim</th>
+                            <th>Giá</th>
+                            <th>Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (CtDonHang i in General.getBillByID(y.soDH))
+                        {
+                            <tr>
+                                <td>@i.soLuong</td>
+                                <td>@i.Phim.tenPhim</td>
+                                <td>@String.Format("{0:n0} đồng", i.giaBan)</td>
+                                <td>@String.Format("{0:n0} đồng", i.giaBan * i.soLuong)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+
+        <div class="row">
+            <!-- accepted payments column -->
+            <div class="col-md-12">
+                <p class="lead">Ngày giao hàng: @(y.ngayGH?.ToString("dd/MM/yyyy hh:mm"))</p>
+                <div class="table-responsive">
+                    <table class="table text-white">
+                        <tbody>
+                            <tr>
+                                @{ long sum = x.getTotal(); long vat = sum * 10 / 100;}
+                                <th>Tổng Cộng:</th>
+                                <td> @String.Format("{0:n0} đồng", sum + vat)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
+            <div class="col-xs-12">
+                <a href="" class="btn btn-default"><i class="fa fa-print"></i> In</a>
+                <button class="btn btn-success pull-right" onclick="location.href = '@Url.Action("Index", "Home")'"><i class="fa fa-home"></i> Về trang chủ</button>
+                <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> In bằng PDF</button>
+            </div>
+        </div>
+    </section>
+</section>

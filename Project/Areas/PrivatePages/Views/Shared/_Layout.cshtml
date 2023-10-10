@@ -1,0 +1,230 @@
+﻿@using System.Web.Optimization
+@using Project.Models;
+
+@{
+    TaiKhoan x = (TaiKhoan)Session["NewLogin"];
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Welcome </title>
+
+    <!-- Bootstrap -->
+    @Styles.Render("~/bundles/css2")
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="~/Media/Images/cuteAvatar.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Xin chào,</span>
+                            <h2>@x.tenTV</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Dashboard </a>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-edit"></i> Bài viết giới thiệu  <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="@Url.Action("Index", "NewBlog")">Đăng bài viết</a></li>
+                                        <li><a href="@Url.Action("Index", "BlogManage", new { valid = 1})">Bài viết hiện hành</a></li>
+                                        <li><a href="@Url.Action("Index", "BlogManage", new { valid = 0})">Bài viết bị ẩn</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-desktop"></i> Danh mục phim <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="@Url.Action("Index","CategoryManage")">Loại phim</a></li>
+                                        <li><a href="@Url.Action("Index","NewMovie")">Thêm phim mới</a></li>
+                                        <li><a href="@Url.Action("Index","MovieManage")">Phim đang khả dụng</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-group"></i> Danh sách khách hàng <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="@Url.Action("Index","NewCustomer")">Khách hàng mới</a></li>
+                                        <li><a href="@Url.Action("Index","Customer")">Danh sách khách hàng</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-inbox"></i> Danh sách đơn hàng <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="@Url.Action("Index","Order")">Đơn hàng mới tạo</a></li>
+                                        <li><a href="@Url.Action("Index","Order","1")">Đơn hàng đang xử lý</a></li>
+                                        <li><a href="@Url.Action("Index","Order","2")">Đơn hàng cho khách</a></li>
+                                        <li><a href="@Url.Action("Index","Order","3")">Đã giao thành công</a></li>
+                                        <li><a href="@Url.Action("Index","Order","4")">Đơn hàng bị hủy</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Lock">
+                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="@Url.Action("LogOut","Dashboard")">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/Media/Images/cuteAvatar.jpg" alt="">@x.hoDem @x.tenTV
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="javascript:;"> Profile</a></li>
+                                    <li>
+                                        <a href="javascript:;">
+                                            <span class="badge bg-red pull-right">50%</span>
+                                            <span>Settings</span>
+                                        </a>
+                                    </li>
+                                    <li><a href="javascript:;">Help</a></li>
+                                    <li><a href="@Url.Action("LogOut","Dashboard")"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+
+                            <li role="presentation" class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green">1</span>
+                                </a>
+                                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                    <li>
+                                        <a>
+                                            <span>
+                                                <span>Sếp</span>
+                                                <span class="time">10 giờ trước</span>
+                                            </span>
+                                            <span class="message">
+                                                Check mail nhé em.
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="text-center">
+                                            <a>
+                                                <strong>See All Alerts</strong>
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            @RenderBody()
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    <!--Java Scripts-->
+    @Scripts.Render("~/bundles/scripts2")
+    <!-- Initialize datetimepicker -->
+    <script>
+        $('#myDatepicker').datetimepicker();
+
+        $('#myDatepicker2').datetimepicker({
+            format: 'DD.MM.YYYY'
+        });
+
+        $('#myDatepicker3').datetimepicker({
+            format: 'hh:mm A'
+        });
+
+        $('#myDatepicker4').datetimepicker({
+            ignoreReadonly: true,
+            allowInputToggle: true
+        });
+
+        $('#datetimepicker6').datetimepicker();
+
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false
+        });
+
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+    </script>
+    <script type='text/javascript'>
+        $('#editor').wysiwyg(
+            {
+                'form':
+                {
+                    'text-field': 'mySubmission',
+                    'seperate-binary': false
+                }
+            });
+
+        $(".dropdown-menu > input").click(function (e) {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>
+
+

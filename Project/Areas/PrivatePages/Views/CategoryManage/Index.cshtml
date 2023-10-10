@@ -1,0 +1,158 @@
+﻿@using Project.Models
+@model Project.Models.LoaiPhim
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Thêm bài viết mới</h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <!--Begin Left Column-->
+            <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Thể loại phim</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Mã loại</th>
+                                    <th>Tên loại phim</th>
+                                    <th>Số sản phẩm</th>
+                                    <th>Nhóm lệnh</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @{
+                                    foreach (LoaiPhim i in General.getCategory())
+                                    {
+                                        <tr>
+                                            <td>@i.maLoai</td>
+                                            <td>@i.tenLoai</td>
+                                            <td>@i.Phims.Count()</td>
+                                            <td class="text-center">
+                                                @using (Html.BeginForm("Update", "CategoryManage", FormMethod.Post, new { @class = "pull-left" }))
+                                                {
+                                                    <button type="submit" class="btn btn-primary" name="maLoai" value="@i.maLoai"><i class="fa fa-pencil"></i> Chỉnh sửa</button>
+                                                }
+
+                                                @using (Html.BeginForm("Delete", "CategoryManage", FormMethod.Post, new { @class = "pull-left" }))
+                                                {
+                                                    <button type="submit" class="btn btn-danger" name="maLoai" value="@i.maLoai"><i class="fa fa-trash-o"></i> Xóa</button>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--End Left Column-->
+            <!--Begin Right Column-->
+            <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Thông tin chính</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        @using (Html.BeginForm("Index", "CategoryManage", FormMethod.Post, new { @class = "form-horizontal form-label-left input_mask" }))
+                        {
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="name">
+                                    Tên loại phim
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    @Html.TextBoxFor(m => m.tenLoai, new { @class = "form-control col-md-7 col-xs-12", id = "name", type = "text" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 col-sm-2 col-xs-12" for="note">
+                                    Diễn giải cho loại phim
+                                </label>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    @Html.TextAreaFor(m => m.ghiChu, new { @class = "resizable_textarea form-control", id = "note", rows = "12" })
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <button type="submit" class="btn btn-success">Lưu</button>
+                                    <button class="btn btn-primary" type="reset">Nhập lại</button>
+                                    <button type="button" class="btn btn-primary">Hủy</button>
+                                </div>
+                            </div>
+                            @Html.HiddenFor(x=> x.maLoai)
+                        }
+                    </div>
+                </div>
+            </div>
+            <!--End Right Column-->
+        </div>
+    </div>
+</div>

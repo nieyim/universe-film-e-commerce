@@ -1,0 +1,109 @@
+﻿@using Project.Models
+
+@{
+    ViewBag.Title = "Index";
+    var p = ViewData["Movie"] as LoaiPhim;
+}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="@Url.Action("Index","Home")"><i class="fa fa-home"></i> Trang Chủ</a>
+                    <a href="@Url.Action("Index","Movie",new { maLoai = 0})">Thể Loại</a>
+                    <span>@p.tenLoai</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<!-- Product Section Begin -->
+<section class="product-page spad">
+    <div class="container">
+        <div class="row">
+            <!-- Begin Left Column -->
+            <div class="col-lg-8">
+                <div class="product__page__content">
+                    <div class="product__page__title">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-6">
+                                <div class="section-title">
+                                    <h4>@p.tenLoai</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                <div class="product__page__filter">
+                                    <p>Order by:</p>
+                                    <select>
+                                        <option value="">A-Z</option>
+                                        <option value="">1-10</option>
+                                        <option value="">10-50</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @{
+                            foreach (Phim i in General.getPhimByCategory(p.maLoai))
+                            {
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic set-bg" data-setbg="@i.hinhDD">
+                                            @if (!(i.soTap).Equals(""))
+                                            {
+                                                <div class="ep">@i.soTap</div>// check loại phim
+                                            }
+                                            <div class="comment">@String.Format("{0:n0} đồng", i.giaBan)</div>
+                                            <div class="view"><i class="fa fa-shopping-cart"></i> @i.luotMua</div>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <ul>
+                                                <li>@i.LoaiPhim.tenLoai</li>
+                                                <li>@i.nhaSanXuat</li>
+                                            </ul>
+                                            <h5><a href="@Url.Action("Index","MovieDetail", new { maPhim = i.maPhim})">@i.tenPhim</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="product__pagination">
+                    <a href="#" class="current-page">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#"><i class="fa fa-angle-double-right"></i></a>
+                </div>
+            </div>
+            <!-- End Left Column -->
+            <!-- Begin Right Column -->
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="product__sidebar">
+                    <div class="product__sidebar__view">
+                        <div class="section-title">
+                            <h5>Thể Loại</h5>
+                        </div>
+                        <div class="filter__gallery">
+                            @{
+                                foreach (LoaiPhim i in General.getCategory())
+                                {
+                                    <div class="product__sidebar__view__item set-bg mix day years"
+                                         data-setbg="@i.hinhDD">
+                                        <h4 class="text-center text-white"><a href="@Url.Action("Index","Movie",new { maLoai = i.maLoai})">@i.tenLoai</a></h4>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Right Column -->
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->

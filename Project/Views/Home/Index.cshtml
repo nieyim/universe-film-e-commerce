@@ -1,0 +1,268 @@
+﻿@using Project.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Random rand = new Random(); // khai báo đối tượng random
+    List<Phim> list1 = General.getPhimTopMark(); // lấy danh sách phim điểm cao nhất
+    List<int> a = new List<int>(); // danh sách dùng cho việc tránh trùng lặp phần tử random
+}
+
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="hero__slider owl-carousel">
+            @{
+                for (int i = 0; i <= 2; i++)
+                {
+                    int randItem; //chỉ số phần tử được random
+                    do { randItem = rand.Next(General.getPhimTopMark().Count); }
+                    while (a.Contains(randItem)); // kiểm tra phần tử vừa random có trong danh sách không
+                    a.Add(randItem);
+                    <div class="hero__items set-bg" data-setbg="@list1.ElementAt(randItem).hinhDD2">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="hero__text">
+                                    <div class="label">@list1.ElementAt(randItem).LoaiPhim.tenLoai</div>
+                                    <h2 style="height: 104px">@list1.ElementAt(randItem).tenPhim</h2>
+                                    <p style="height: 100px">
+                                        @list1.ElementAt(randItem).ndTomTat
+                                    </p>
+                                    <a href="@Url.Action("Index","MovieDetail",new { maPhim = list1.ElementAt(randItem).maPhim})"><span>Xem Phim</span> <i class="fa fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <!-- Left Column Begin -->
+            <div class="col-lg-8">
+                <div class="trending__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title">
+                                <h4>Phim Hot</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a href="@Url.Action("Index","Movie",new { maLoai = 0})" class="primary-btn">Xem Tất Cả <span class="arrow_right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @{
+                            int i1 = 0;
+                            foreach (Phim i in General.getPhimTopBuy())
+                            {
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic set-bg" data-setbg="@i.hinhDD">
+                                            @if (!(i.soTap).Equals(""))
+                                            {
+                                                <div class="ep">@i.soTap</div> // check loại phim
+                                            }
+                                            <div class="comment">@String.Format("{0:n0} đồng", i.giaBan)</div>
+                                            <div class="view"><i class="fa fa-shopping-cart"></i> @i.luotMua</div>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <ul>
+                                                <li>@i.LoaiPhim.tenLoai</li>
+                                                <li>@i.nhaSanXuat</li>
+                                            </ul>
+                                            <h5><a href="@Url.Action("Index","MovieDetail", new { maPhim = i.maPhim})">@i.tenPhim</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                if (i1 >= 8) { break; }
+                                i1++;
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="popular__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title">
+                                <h4>Phim Mới</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a href="@Url.Action("Index","Movie",new { maLoai = 0})" class="primary-btn">Xem Tất Cả <span class="arrow_right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @{
+                            int i2 = 0;
+                            foreach (Phim i in General.getPhimLatest())
+                            {
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic set-bg" data-setbg="@i.hinhDD">
+                                            @if (!(i.soTap).Equals(""))
+                                            {
+                                                <div class="ep">@i.soTap</div>
+                                            }
+                                            <div class="comment">@String.Format("{0:n0} đồng", i.giaBan)</div>
+                                            <div class="view"><i class="fa fa-shopping-cart"></i> @i.luotMua</div>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <ul>
+                                                <li>@i.LoaiPhim.tenLoai</li>
+                                                <li>@i.nhaSanXuat</li>
+                                            </ul>
+                                            <h5><a href="@Url.Action("Index","MovieDetail", new { maPhim = i.maPhim})">@i.tenPhim</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                if (i2 >= 8) { break; }
+                                i2++;
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="recent__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title">
+                                <h4>Phim Giá Rẻ</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a href="@Url.Action("Index","Movie",new { maLoai = 0})" class="primary-btn">Xem Tất Cả <span class="arrow_right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @{
+                            int i3 = 0;
+                            foreach (Phim i in General.getPhimCheap())
+                            {
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic set-bg" data-setbg="@i.hinhDD">
+                                            @if (!(i.soTap).Equals(""))
+                                            {
+                                                <div class="ep">@i.soTap</div>
+                                            }
+                                            <div class="comment">@String.Format("{0:n0} đồng", i.giaBan)</div>
+                                            <div class="view"><i class="fa fa-shopping-cart"></i> @i.luotMua</div>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <ul>
+                                                <li>@i.LoaiPhim.tenLoai</li>
+                                                <li>@i.nhaSanXuat</li>
+                                            </ul>
+                                            <h5><a href="@Url.Action("Index","MovieDetail", new { maPhim = i.maPhim})">@i.tenPhim</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                if (i3 >= 8) { break; }
+                                i3++;
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="live__product">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <div class="section-title">
+                                <h4>Phim Điểm Đánh Giá Cao</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="btn__all">
+                                <a href="@Url.Action("Index","Movie",new { maLoai = 0})" class="primary-btn">Xem Tất Cả <span class="arrow_right"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @{
+                            int i4 = 0;
+                            foreach (Phim i in General.getPhimTopMark())
+                            {
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item">
+                                        <div class="product__item__pic set-bg" data-setbg="@i.hinhDD">
+                                            @if (!(i.soTap).Equals(""))
+                                            {
+                                                <div class="ep">@i.soTap</div>
+                                            }
+                                            <div class="comment">@String.Format("{0:n0} đồng", i.giaBan)</div>
+                                            <div class="view"><i class="fa fa-shopping-cart"></i> @i.luotMua</div>
+                                        </div>
+                                        <div class="product__item__text">
+                                            <ul>
+                                                <li>@i.LoaiPhim.tenLoai</li>
+                                                <li>@i.nhaSanXuat</li>
+                                            </ul>
+                                            <h5><a href="@Url.Action("Index","MovieDetail", new { maPhim = i.maPhim})">@i.tenPhim</a></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                if (i4 >= 8) { break; }
+                                i4++;
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- Left Column End -->
+            <!-- Right Column Begin -->
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="product__sidebar">
+                    <div class="product__sidebar__view">
+                        <div class="section-title">
+                            <h5>Thể Loại</h5>
+                        </div>
+                        <ul class="filter__controls">
+                            @{
+                                int f1 = 0;
+                                foreach (LoaiPhim i in General.getCategory())
+                                {
+                                    <li data-filter=".tab_@i.maLoai">@i.tenLoai</li>
+                                    if (f1 >= 2) { break; }
+                                    f1++;
+                                }
+                            }
+                        </ul>
+                        <div class="filter__gallery">
+                            @{
+                                int f2 = 0;
+                                foreach (LoaiPhim i in General.getCategory())
+                                {
+                                    foreach (Phim j in General.getPhimByCategory(i.maLoai))
+                                    {
+                                        <div class="product__sidebar__view__item set-bg mix tab_@i.maLoai"
+                                             data-setbg="@j.hinhDD2">
+                                            @if (!(j.soTap).Equals(""))
+                                            {
+                                                <div class="ep">@j.soTap</div>  // check loại phim
+                                            }
+                                            <div class="view"><i class="fa fa-shopping-cart"> @j.luotMua</i></div>
+                                            <h5><a href="@Url.Action("Index","MovieDetail", new { maPhim = j.maPhim})">@j.tenPhim</a></h5>
+                                        </div>
+                                    }
+                                    if (f2 >= 2) { break; }
+                                    f2++;
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Column End -->
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->

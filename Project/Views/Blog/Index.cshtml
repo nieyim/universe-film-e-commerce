@@ -1,0 +1,73 @@
+﻿@using Project.Models
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    var list1 = General.getBlogLatest();
+    int blogHalf = (list1.Count()) / 2;
+}
+
+<!-- Normal Breadcrumb Begin -->
+<section class="normal-breadcrumb set-bg" data-setbg="../../Media/Images/blogBanner.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="normal__breadcrumb__text">
+                    <h2>Bài Viết</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Normal Breadcrumb End -->
+<!-- Blog Section Begin -->
+<section class="blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    @for (int i = 0; i < blogHalf; i++)
+                    {
+                        <div class="@( i%3 == 0? "col-lg-12": "col-lg-6 col-md-6 col-sm-6")">
+                            <div class="blog__item @( i%3 == 0? "":"small__item") set-bg" data-setbg="@list1.ElementAt(i).hinhDD">
+                                <div class="blog__item__text">
+                                    <p><span class="icon_calendar"></span>@((list1.ElementAt(i).ngayDang)?.ToString("dd/MM/yyyy"))</p>
+                                    <h4><a href="@Url.Action("Index","BlogDetail", new { maBV = list1.ElementAt(i).maBV})">@list1.ElementAt(i).tenBV</a></h4>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    @{
+                        int j = 0;
+                        int h = 2;
+                        for (int i = blogHalf; i < list1.Count; i++)
+                        {
+                            <div class="@( j == h? "col-lg-12": "col-lg-6 col-md-6 col-sm-6")">
+                                <div class="blog__item @( j == h? "":"small__item") set-bg" data-setbg="@list1.ElementAt(i).hinhDD">
+                                    <div class="blog__item__text">
+                                        <p><span class="icon_calendar"></span>@((list1.ElementAt(i).ngayDang)?.ToString("dd/MM/yyyy"))</p>
+                                        <h4><a href="@Url.Action("Index","BlogDetail", new { maBV = list1.ElementAt(i).maBV})">@list1.ElementAt(i).tenBV</a></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            if (j == h)
+                            {
+                                h += 3;
+                            }
+                            j++;
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Blog Section End -->

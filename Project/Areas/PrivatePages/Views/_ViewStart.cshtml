@@ -1,0 +1,14 @@
+﻿@using Project.Models
+
+@{
+    if ((TaiKhoan)Session["NewLogin"] == null)
+    {
+        Response.Redirect("/Login");
+    }
+    else
+    {
+        Layout = "~/Areas/PrivatePages/Views/Shared/_Layout.cshtml";
+    }
+}
+
+

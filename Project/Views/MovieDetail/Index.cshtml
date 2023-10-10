@@ -1,0 +1,196 @@
+﻿@using Project.Models;
+
+@{
+    ViewBag.Title = "Index";
+    var m = ViewData["Movie"] as Phim;
+}
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="@Url.Action("Index","Home")"><i class="fa fa-home"></i> Trang Chủ</a>
+                    <a href="@Url.Action("Index","Movie",new { maLoai = 0})">Thể Loại</a>
+                    <span>@m.LoaiPhim.tenLoai</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+<!-- Anime Section Begin -->
+<section class="anime-details spad">
+    <div class="container">
+        <div class="anime__details__content">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="anime__details__pic set-bg" data-setbg="@m.hinhDD">
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="anime__details__text">
+                        <div class="anime__details__title">
+                            <h3>@m.tenPhim</h3>
+                        </div>
+                        <div class="anime__details__rating">
+                            <div class="rating">
+                                @{
+                                    int star = 0;
+                                    switch ((m.diemImdb)[0].ToString())
+                                    {
+                                        case "9": star = 4; break;
+                                        case "8": star = 3; break;
+                                        case "7": star = 2; break;                    // Đánh giá sao dựa theo điểm
+                                        case "6": star = 1; break;
+                                        default: star = 0; break;
+                                    }
+                                    for (int i=0; i<=star; i++) { <a href="#"><i class="fa fa-star"></i></a>} //in sao vàng
+                                    for (int j=0; j<=3-star; j++) { <a href="#"><i class="fa fa-star-o"></i></a>}
+                                }
+                            </div>
+                        </div>
+                        <p>
+                            @m.ndTomTat
+                        </p>
+                        <div class="anime__details__widget">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <ul>
+                                        <li><span>Kiểu Phim:</span> @(!(m.soTap).Equals("")? "Phim Truyền Hình Dài Tập" : "Phim Điện Ảnh")</li>
+                                        <li><span>Nhà Sản Xuất:</span> @m.nhaSanXuat</li>
+                                        <li><span>Ngày Ra Mắt:</span> @((m.ngayPH)?.ToString("dd/MM/yyyy"))</li>
+                                        <li><span>Thể Loại:</span> @m.LoaiPhim.tenLoai</li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <ul>
+                                        <li><span>Điểm IMDb:</span> @m.diemImdb</li>
+                                        <li><span>Số Lượt Mua:</span> @m.luotMua lần</li>
+                                        <li><span>Thời Lượng:</span> @m.thoiLuong</li>
+                                        <li><span>Độ Phân Giải:</span> @m.doPG</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="anime__details__btn">
+                            <div class="follow-btn" style="cursor: default; text-transform: none">@String.Format("{0:n0} đồng", m.giaBan)</div>
+                            @using (Html.BeginForm("Buy", "MovieDetail", FormMethod.Post, new { style = "display: inline;" , id ="buy"}))
+                            {
+                                <input type="hidden" name="maPhim" value="@m.maPhim" />
+                                <a href="#" onclick="buy.submit();" class="watch-btn">
+                                    <span>Mua Ngay</span> <i class="fa fa-angle-right"></i>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Begin Left Column -->
+            <div class="col-lg-8 col-md-8">
+                <div class="anime__details__review">
+                    <div class="section-title">
+                        <h5>Bình Luận</h5>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../../Media/Images/anime/review-1.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Chris Curry - <span>vừa xong</span></h6>
+                            <p>
+                                Phim hay quá
+                            </p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../../Media/Images/anime/review-2.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Lewis Mann - <span>3 phút</span></h6>
+                            <p>Cuối cùng cũng có, chờ mỏi cổ</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../../Media/Images/anime/review-3.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Louis Tyler - <span>1 giờ trước</span></h6>
+                            <p>Ủa kết vậy là sao khó hiểu thế mọi người :< ?</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../../Media/Images/anime/review-4.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Chris Curry - <span>5 giờ trước</span></h6>
+                            <p>
+                                Link lỗi rồi ad ơi
+                            </p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../../Media/Images/anime/review-5.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Lewis Mann - <span>13 giờ trước</span></h6>
+                            <p>Hay vl</p>
+                        </div>
+                    </div>
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            <img src="../../Media/Images/anime/review-6.jpg" alt="">
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>Louis Tyler - <span>20 tiếng trước</span></h6>
+                            <p>Ending gây tò mò thật :))</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="anime__details__form">
+                    <div class="section-title">
+                        <h5>Bình Luận Gì Đó</h5>
+                    </div>
+                    <form action="#">
+                        <textarea placeholder="Gõ vào đây"></textarea>
+                        <button type="submit"><i class="fa fa-location-arrow"></i> Gửi</button>
+                    </form>
+                </div>
+            </div>
+            <!-- End Left Column -->
+            <!-- Begin Right Column -->
+            <div class="col-lg-4 col-md-4">
+                <div class="anime__details__sidebar">
+                    <div class="section-title">
+                        <h5>Bạn có thể thích</h5>
+                    </div>
+                    @{
+                        int i1 = 0;
+                        foreach (Phim i in General.getPhimTopMark())
+                        {
+                            <div class="product__sidebar__view__item set-bg" data-setbg="@i.hinhDD2">
+                                @if (!(i.soTap).Equals(""))
+                                {
+                                    <div class="ep">@i.soTap</div>
+                                }
+                                <div class="view"><i class="fa fa-shopping-cart"></i> @i.luotMua</div>
+                                <h5><a href="@Url.Action("Index","MovieDetail", new { maPhim = i.maPhim})">@i.tenPhim</a></h5>
+                            </div>
+                            if (i1 >= 4) { break; }
+                            i1++;
+                        }
+                    }
+                </div>
+            </div>
+            <!-- End Right Column -->
+        </div>
+    </div>
+</section>
+<!-- Anime Section End -->

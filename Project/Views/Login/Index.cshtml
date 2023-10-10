@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- Normal Breadcrumb Begin -->
+<section class="normal-breadcrumb set-bg" data-setbg="">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="normal__breadcrumb__text">
+                    <h2>Đăng Nhập</h2>
+                    <p>Chào mừng đến với Universe.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Normal Breadcrumb End -->
+
+<!-- Login Section Begin -->
+<section class="login spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login__form">
+                    <h3>Đăng Nhập</h3>
+                    @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="input__item">
+                            @Html.TextBox("taiKhoan", "", new { @class = "form-control", placeholder = "Tên đăng nhập" })
+                            <span class="icon_mail"></span>
+                        </div>
+                        <div class="input__item">
+                            @Html.Password("matKhau", "", new { @class = "form-control", placeholder = "Mật khẩu" })
+                            <span class="icon_lock"></span>
+                        </div>
+                        <p style="color: #e53637;">@ViewBag.Warning</p>
+                        <button type="submit" class="site-btn">Đăng Nhập Ngay</button>
+                    }
+                    <a href="#" class="forget_pass">Quên Mật Khẩu?</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login__register">
+                    <h3>Chưa Có Tài Khoản?</h3>
+                    <a href="#" class="primary-btn">Đăng Kí Ngay</a>
+                </div>
+            </div>
+        </div>
+        <div class="login__social">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6">
+                    <div class="login__social__links">
+                        <span>or</span>
+                        <ul>
+                            <li>
+                                <a href="#" class="facebook">
+                                    <i class="fa fa-facebook"></i> Đăng nhập bằng
+                                    Facebook
+                                </a>
+                            </li>
+                            <li><a href="#" class="google"><i class="fa fa-google"></i> Đăng nhập bằng Google</a></li>
+                            <li>
+                                <a href="#" class="twitter"><i class="fa fa-twitter"></i> Đăng nhập bằng Twitter</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Login Section End -->

@@ -1,0 +1,121 @@
+﻿@using Project.Models
+
+@{
+    ViewBag.Title = "Index";
+    Cart x = Session["Cart"] as Cart;
+
+}
+<link href="~/Content/cart.css" rel="stylesheet" />
+
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="section-title">
+            <h5>Giỏ Hàng</h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shop__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Phim</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                if (x.isEmpty())
+                                {
+                                    <script>
+                                        setTimeout(function () {
+                                            alert("Giỏ hàng của bạn chưa có gì");
+                                        }, 1000);
+                                    </script>
+                                }
+                                else
+                                {
+                                    int j = 0;
+                                    foreach (CtDonHang i in x.choosenFilms.Values)
+                                    {
+                                        <tr>
+                                            <td class="cart__product__item">
+                                                <img src="@(new MovieShopConnect().Phims.Find(i.maPhim).hinhDD)" alt="">
+                                                <div class="cart__product__item__title">
+                                                    <h6>@(new MovieShopConnect().Phims.Find(i.maPhim).tenPhim)</h6>
+                                                </div>
+                                            </td>
+                                            <td class="cart__price">@String.Format("{0:n0} đồng", i.giaBan)</td>
+                                            <td class="cart__quantity">
+                                                <div class="pro-qty">
+                                                    @using (Html.BeginForm("Decrease", "Cart", FormMethod.Post))
+                                                    {
+                                                        <input type="hidden" name="maPhim" value="@i.maPhim">
+                                                        <button class="dec qtybtn bg-transparent" style="padding: 0; border: none">-</button>
+                                                    }
+                                                    <input type="text" value="@i.soLuong">
+                                                    @using (Html.BeginForm("Increase", "Cart", FormMethod.Post))
+                                                    {
+                                                        <input type="hidden" name="maPhim" value="@i.maPhim">
+                                                        <button class="inc qtybtn bg-transparent" style="padding: 0; border: none">+</button>
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td class="cart__total">@String.Format("{0:n0} đồng", x.getPrice(i))</td>
+                                            @using (Html.BeginForm("Delete", "Cart", FormMethod.Post))
+                                            {
+                                                <td class="cart__close"><button class="icon_close btn" style="color: #fff"></button></td>
+                                                <input type="hidden" name="maPhim" value="@i.maPhim">
+                                            }
+                                        </tr>
+                                        j++;
+                                    }
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cart__btn">
+                    <a href="@Url.Action("Index","Movie",new { maLoai = 0})">Tiếp tục mua sắm</a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="cart__btn update__btn">
+                    <a href="#" onclick="location.reload()"><span class="icon_loading"></span> Cập nhật giỏ hàng</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="discount__content">
+                    <h6>Discount codes</h6>
+                    <form action="#">
+                        <input type="text" placeholder="Nhập mã giảm giá">
+                        <button class="site-btn">OK</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4 offset-lg-2">
+                <div class="cart__total__procced" style="background-color: #0b0c2a">
+                    <h6>Tổng tiền</h6>
+                    <ul>
+                        @{ long sum = x.getTotal(); long vat = sum * 10 / 100;}
+                        <li>Tổng thành tiền <span>@String.Format("{0:n0} đồng", sum)</span></li>
+                        <li>Thuế VAT<span>@String.Format("{0:n0} đồng", vat)</span></li>
+                        <li>Tổng hóa đơn <span>@String.Format("{0:n0} đồng", sum + vat)</span></li>
+                    </ul>
+                    <a href="@Url.Action("Index","Checkout")" class="primary-btn">Thanh Toán</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

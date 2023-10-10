@@ -1,0 +1,102 @@
+﻿@using Project.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Danh sách bài viết hiện hành</h3>
+            </div>
+
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Bài Viết</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="#">Settings 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Stt</th>
+                                    <th>Tên bài viết</th>
+                                    <th>Ngày đăng</th>
+                                    <th>Tài khoản</th>
+                                    <th>Số lần đọc</th>
+                                    <th>Nhóm lệnh</th>
+                                </tr>
+                            </thead>
+
+
+                            <tbody>
+                                @{
+                                    int index1 = 0;
+                                    foreach (BaiViet i in General.getBlogActive())
+                                    {
+                                        <tr>
+                                            <td>@(index1+1)</td>
+                                            <td>@i.tenBV</td>
+                                            <td>@((i.ngayDang)?.ToString("dd/MM/yyyy HH:mm"))</td>
+                                            <td>@i.TaiKhoan1.hoDem @i.TaiKhoan1.tenTV</td>
+                                            <td>@i.luotXem</td>
+                                            <td class="text-center">
+                                                @using (Html.BeginForm("Status","BlogManage",FormMethod.Post, new { @class = "pull-left" }))
+                                                {
+                                                    <button type="submit" class="btn btn-primary" name="maBV" value="@i.maBV"><i class="fa fa-power-off"></i> Tạm ẩn</button>
+
+                                                }
+                                                <button type="submit" class="btn btn-default pull-left" onclick="location.href = '@Url.Action("Index","NewBlog")'"><i class="fa fa-pencil"></i> Chỉnh sửa</button>
+                                                @using (Html.BeginForm("Delete", "BlogManage", FormMethod.Post, new { @class = "pull-left" }))
+                                                {
+                                                    <button type="submit" class="btn btn-danger" name="maBV" value="@i.maBV"><i class="fa fa-trash-o"></i> Xóa bài</button>
+                                                }
+                                                </td>
+                                        </tr>
+                                        index1++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

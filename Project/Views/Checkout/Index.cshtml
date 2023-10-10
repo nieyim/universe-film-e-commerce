@@ -1,0 +1,103 @@
+﻿@model Project.Models.KhachHang
+@using Project.Models
+
+@{
+    ViewBag.Title = "Index";
+    Cart x = Session["Cart"] as Cart;
+}
+
+<link href="~/Content/cart.css" rel="stylesheet" />
+
+<style>
+    #note:before {
+        background: none
+    }
+
+    #note textarea {
+        font-size: 15px;
+        color: #b7b7b7;
+    }
+
+        #note textarea::placeholder {
+            color: #b7b7b7;
+        }
+</style>
+
+<section class="product-page spad">
+    <div class="container">
+        <div class="row">
+
+            <!-- Begin Left Column -->
+            <div class="col-lg-8">
+                <div class="product__page__content">
+                    <div class="product__page__title">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-6">
+                                <div class="section-title">
+                                    <h4>Thanh Toán</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="login__form">
+                        @using (Html.BeginForm("Index", "Checkout", FormMethod.Post, new { id = "trans" }))
+                        {
+                            <div class="input__item">
+                                @Html.TextBoxFor(m => m.tenKH, new { @class = "form-control", placeholder = "Tên khách hàng" })
+                                <span class="fa fa-user"></span>
+                            </div>
+                            <div class="input__item">
+                                @Html.TextBoxFor(m => m.soDT, new { @class = "form-control", placeholder = "Số điện thoại" })
+                                <span class="fa fa-phone"></span>
+                            </div>
+                            <div class="input__item">
+                                @Html.TextBoxFor(m => m.ngaySinh, new { @class = "form-control", title = "Ngày sinh", type = "date" })
+                                <span class="fa fa-calendar"></span>
+                            </div>
+                            <div class="input__item">
+                                @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder = "Email nhận hàng" })
+                                <span class="fa fa-envelope"></span>
+                            </div>
+                            <label class="text-white mr-2 mb-3">
+                                @Html.RadioButtonFor(m => m.gioiTinh, true) Nam
+                            </label>
+                            <label class="text-white">
+                                @Html.RadioButton("gioiTinh", false) Nữ
+                            </label>
+                            <div class="input__item" id="note">
+                                @Html.TextAreaFor(m => m.ghiChu, new { @class = "form-control", placeholder = "Ghi chú", rows = 4 })
+                            </div>
+                            <div class="cart__total__procced" style="background-color: #0b0c2a">
+                                <a href="@Url.Action("Index", "Cart")" class="primary-btn mb-3" style="background: #fff; color: #e53637;">Xem Lại Giỏ Hàng</a>
+                                <a href="#" class="primary-btn" onclick="trans.submit()">Xác Nhận Đặt Hàng</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- End Left Column -->
+            <!-- Begin Right Column -->
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="product__sidebar">
+                    <div class="product__sidebar__view">
+                        <div class="section-title">
+                            <h5>Tổng tiền</h5>
+                        </div>
+                        <div class="cart__total__procced" style="background-color: #0b0c2a">
+                            <ul>
+                                @{ long sum = x.getTotal(); long vat = sum * 10 / 100;}
+                                @foreach (CtDonHang i in x.choosenFilms.Values)
+                                {
+                                    <li>@(new MovieShopConnect().Phims.Find(i.maPhim).tenPhim) <span>x @i.soLuong</span></li>
+                                }
+                                <li>Tổng hóa đơn <span>@String.Format("{0:n0} đồng", sum + vat)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Right Column -->
+
+        </div>
+    </div>
+</section>
