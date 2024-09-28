@@ -2,19 +2,11 @@
 
 Welcome to my Movie E-Commerce ASP.NET MVC Web Application project! This web application is designed to provide movie enthusiasts with a seamless and user-friendly platform to explore, purchase, and enjoy their favorite films online.
 
-![Home 1](Screenshots/Home1.PNG)
-![Home 2](Screenshots/Home2.PNG)
-![Movie](Screenshots/Movie.PNG)
-![Movie Detail](Screenshots/MovieDetail.PNG)
-![Blog](Screenshots/Blog.PNG)
-![Blog Detail](Screenshots/BlogDetail.PNG)
-![Log In](Screenshots/LogIn.PNG)
-![Admin](Screenshots/Admin.PNG)
-
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Key Features](#key-features)
 - [Built With](#built-with)
+- [Project Screenshots](#project-screenshots)
 
 ## Project Overview
 
@@ -59,3 +51,14 @@ In the digital age of entertainment, the way we discover, purchase, and enjoy mo
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
+
+## Project Screenshots
+
+![Home 1](Screenshots/Home1.PNG)
+![Home 2](Screenshots/Home2.PNG)
+![Movie](Screenshots/Movie.PNG)
+![Movie Detail](Screenshots/MovieDetail.PNG)
+![Blog](Screenshots/Blog.PNG)
+![Blog Detail](Screenshots/BlogDetail.PNG)
+![Log In](Screenshots/LogIn.PNG)
+![Admin](Screenshots/Admin.PNG)
